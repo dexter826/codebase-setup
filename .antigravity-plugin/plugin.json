@@ -21,6 +21,7 @@
     "design-md",
     "quality-gates"
   ],
+  "logo": "assets/logo-dark.svg",
   "suggestedPrompts": [
     "Setup base project mới",
     "Harden repo hiện tại (thêm lint, test, CI)",

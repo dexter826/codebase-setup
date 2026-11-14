@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>codebase-setup</title>
+  <g id="symbol">
+    <!-- Top terminal prompt / execution chevron -->
+    <path d="M 128 36 L 210 83.3 L 180 100.6 L 128 70.6 L 76 100.6 L 46 83.3 Z" fill="#00cc5c"/>
+    <path d="M 128 86 L 162 105.6 L 142 117.2 L 128 109.1 L 114 117.2 L 94 105.6 Z" fill="#00cc5c"/>
+    <!-- Code baseline pillars -->
+    <path d="M 40 98 L 120 144.2 L 120 220 L 40 173.8 Z" fill="#ededed"/>
+    <path d="M 136 144.2 L 216 98 L 216 173.8 L 136 220 Z" fill="#ededed"/>
+  </g>
+</svg>
