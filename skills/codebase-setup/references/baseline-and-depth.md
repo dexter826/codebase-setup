@@ -67,7 +67,7 @@ Modules are cumulative. Tests assume quality. Delivery assumes the project can b
 | agent_context | yes | yes | yes | yes | yes | yes | yes |
 
 `optional` means: add only if the repository has code or scripts that benefit. A Markdown-only package does not need a code lint/test toolchain.  
-`design` is exclusive to user-facing frontend/UI applications (`application` archetype with React, Vue, Svelte, Angular, iOS, Android, Desktop) or when UI design tokens are explicitly requested. Never add `DESIGN.md` to backend services or CLI tools.
+`design` is exclusive to user-facing frontend/UI applications (`application` archetype with React, Vue, Svelte, Angular, iOS, Android, Desktop) or when UI design tokens are explicitly requested. Never add `DESIGN.md` to backend services or CLI tools. In monorepos containing mixed packages (e.g. `apps/web` alongside `apps/api`), locate `DESIGN.md` inside the specific UI package directory (e.g. `apps/web/DESIGN.md`) rather than at the monorepo root.
 
 ## What not to add
 

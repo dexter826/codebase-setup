@@ -144,6 +144,18 @@ Trước khi thay đổi repository, skill trình bày kế hoạch gồm file s
 ```text
 codebase-setup/
 ├── plugin.json
+├── .antigravity-plugin/
+│   └── plugin.json
+├── .claude-plugin/
+│   ├── plugin.json
+│   └── marketplace.json
+├── .agents/plugins/
+│   └── marketplace.json
+├── assets/
+│   ├── logo-dark.svg
+│   ├── logo-light.svg
+│   ├── logo-horizontal-dark.svg
+│   └── logo-horizontal-light.svg
 ├── README.md
 ├── CHANGELOG.md
 ├── LICENSE
@@ -152,7 +164,12 @@ codebase-setup/
 │   └── files/
 └── skills/codebase-setup/
     ├── SKILL.md
-    ├── assets/templates/AGENTS.md
+    ├── assets/templates/
+    │   ├── AGENTS.md
+    │   ├── DESIGN.md
+    │   ├── .editorconfig
+    │   ├── CONTRIBUTING.md
+    │   └── SECURITY.md
     └── references/
         ├── intake-and-brief.md
         ├── discovery-and-gap.md

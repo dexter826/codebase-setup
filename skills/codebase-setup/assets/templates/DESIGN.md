@@ -59,9 +59,13 @@ A clean, accessible, modern interface focusing on dense, purposeful information 
 - **Container Widths**: Mobile (`100%`), Tablet (`768px`), Desktop (`1200px` max).
 - No arbitrary padding or margin values outside the defined spacing scale.
 
-## Shapes & Elevation
+## Shapes & Radii
 - **Border Radius**: Cards and inputs use `rounded-md` (`8px`); buttons use `rounded-md` (`8px`) or `rounded-lg` (`16px`); pills and badges use `rounded-full`.
-- **Elevation**: Flat by default with subtle border (`1px solid #334155`); floating elements (menus, modals) use `elevation.md`.
+- Keep corner styling consistent across sibling components; avoid mixing sharp 0px and rounded corners arbitrarily.
+
+## Elevation & Depth
+- **Depth Layers**: Flat by default with subtle border (`1px solid #334155`); floating elements (menus, modals, tooltips) use `elevation.md`.
+- Keep shadow systems subtle and paired with border highlights for accessible contrast in dark mode.
 
 ## Components & Signatures
 - **Buttons**: Clear visual hierarchy (Primary filled, Secondary outline, Ghost for auxiliary actions). Minimum target size of 44x44px.
