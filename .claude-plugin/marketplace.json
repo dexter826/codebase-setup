@@ -1,0 +1,15 @@
+{
+  "name": "codebase-setup",
+  "owner": {
+    "name": "dexter826"
+  },
+  "plugins": [
+    {
+      "name": "codebase-setup",
+      "source": "./",
+      "version": "0.1.0",
+      "description": "Set up or harden any codebase into a working baseline with source initialization, quality gates, tests, CI, Docker/env, standard project files (AGENTS.md, DESIGN.md), and AI agent context, using consent-driven execution.",
+      "category": "developer-tools"
+    }
+  ]
+}

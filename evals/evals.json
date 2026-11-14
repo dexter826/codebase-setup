@@ -1,0 +1,88 @@
+{
+  "skill_name": "codebase-setup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Tao muốn dựng một web app mới tên acme-web trong workspace hiện tại. Thư mục đang trống. Dùng React + TypeScript, Vite, npm. Có test và CI luôn. Tao pre-approve việc chạy scaffolder và cài dependency, nhưng AGENTS.md thì phải hỏi tao trước khi tạo. Setup xong chạy kiểm tra giúp tao.",
+      "expected_output": "Classifies the request as scaffold / application / Vite React TypeScript, presents a plan, verifies the official Vite scaffolder command and flags, runs source initialization and dependency installation under the pre-authorized gates, previews AGENTS.md and waits for approval instead of creating it, runs lint/typecheck/test/build verification, and reports results honestly with a consent log.",
+      "files": [],
+      "expectations": [
+        "Classifies the mode as scaffold and the archetype as application with a Vite + React + TypeScript stack.",
+        "Shows a plan before creating files or running commands, including the exact source init command and its side effects.",
+        "Uses the official Vite scaffolder rather than hand-writing the Vite application files.",
+        "Does not create AGENTS.md because approval was withheld; it shows the proposed content and asks first.",
+        "Does not install any global tool without a separate explicit consent gate.",
+        "Runs verification commands and reports pass/fail/skipped with reasons instead of claiming unrun checks passed.",
+        "Includes a consent log covering source init, dependency installation, and the pending AGENTS.md decision."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Repo React + TypeScript ở `evals/files/node-harden`. Nó đang thiếu lint, format, test và CI. Setup bổ sung cho tao, dùng npm vì team tao dùng npm. Đừng đổi code trong src và đừng đổi mấy script dev/build hiện có.",
+      "expected_output": "Classifies the mode as harden, preserves the existing package.json scripts and source files, adds only the missing lint/format/test tooling and CI workflow, does not run source initialization, and reports every change as additive with verification evidence.",
+      "files": ["evals/files/node-harden"],
+      "expectations": [
+        "Classifies the mode as harden and does not run any source scaffolder.",
+        "Preserves the existing dev and build scripts and does not rewrite files under src/.",
+        "Adds lint, format, and test tooling rather than replacing existing choices.",
+        "Creates a CI workflow that runs the repository's actual scripts and install commands.",
+        "Does not switch package managers or introduce a lockfile for a different manager.",
+        "Reports the changes as additive and separates verification results from pending items."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Repo FastAPI ở `evals/files/python-partial`. Setup thêm CI, Dockerfile và .env.example cho tao. Giữ nguyên Ruff và pytest đang có, đừng đổi cấu hình trong pyproject.toml. Nếu cần quyết định gì thì hỏi tao một lần thôi.",
+      "expected_output": "Classifies the mode as harden and the stack as Python + FastAPI, preserves the existing pyproject.toml, Ruff and pytest configuration, adds CI, Dockerfile and an environment example that documents variable names only, and consolidates any remaining decision into one question.",
+      "files": ["evals/files/python-partial"],
+      "expectations": [
+        "Preserves the existing pyproject.toml Ruff and pytest configuration without rewriting it.",
+        "Does not add a requirements.txt or migrate to another Python package manager without asking.",
+        "Creates a CI workflow that uses the project's actual lint and test setup.",
+        "Creates a Dockerfile that runs the real application entrypoint and does not copy secrets into the image.",
+        "Creates an environment example containing variable names and safe placeholders only.",
+        "Does not re-initialize the Python project or scaffold a new service."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Repo ở `evals/files/custom-agents`. Tao cần thêm CI và bổ sung test còn thiếu. Tuyệt đối không sửa AGENTS.md hiện có, file đó có quy ước riêng của team tao. Cũng đừng tạo file agent nào khác.",
+      "expected_output": "Classifies the mode as harden, reads the existing AGENTS.md and respects its project rules, leaves AGENTS.md and all other agent instruction files untouched, adds only the CI and test work that was requested, and reports the preserved files explicitly.",
+      "files": ["evals/files/custom-agents"],
+      "expectations": [
+        "Leaves the existing AGENTS.md byte-identical and does not create CLAUDE.md, .cursorrules, or any other agent instruction file.",
+        "Reads the existing AGENTS.md rules and does not create a CHANGELOG.md that conflicts with the stated release-notes convention.",
+        "Adds CI and test coverage without rewriting the existing source or README.",
+        "Does not add new dependencies beyond what the requested test work requires, or asks before adding them.",
+        "Reports explicitly that AGENTS.md was preserved and that no agent files were changed."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Tạo cho tao một skill package mới tên `release-notes` trong workspace hiện tại. Tao chỉ cần khung package đúng chuẩn và chạy được, chưa cần viết nội dung skill hay eval. Đừng cài tooling phần mềm gì nếu không cần.",
+      "expected_output": "Classifies the request as scaffold / skill-package / generic stack, creates the standard package skeleton with plugin metadata, README, license, a SKILL.md placeholder, and an evals entry point, avoids unnecessary Node or Python tooling, previews AGENTS.md before creating it, and hands off skill content authoring to skill-creator.",
+      "files": [],
+      "expectations": [
+        "Classifies the archetype as skill-package and does not treat it as an application or service.",
+        "Creates plugin metadata, README, license, a SKILL.md skeleton with valid frontmatter, and an evals entry point.",
+        "Does not create package.json, pyproject.toml, go.mod, or a code lint/test toolchain for a Markdown-only package.",
+        "Previews AGENTS.md and asks before creating it instead of writing it silently.",
+        "Hands off skill content, description optimization, and eval authoring to skill-creator.",
+        "Runs a lightweight validation of the created JSON and frontmatter and reports the result."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Dựng một web app frontend React + Tailwind trong thư mục web-portal (đang trống). Dự án cần có design system rõ ràng và hướng dẫn AI agent. Setup cho tao DESIGN.md theo chuẩn Google Stitch và AGENTS.md, preview nội dung cho tao duyệt trước khi tạo.",
+      "expected_output": "Classifies the mode as scaffold / application with UI components. Activates the design module and proposes DESIGN.md following Google Stitch spec (YAML tokens + 8 Markdown sections). Previews both AGENTS.md and DESIGN.md before writing, and reports consent status.",
+      "files": [],
+      "expectations": [
+        "Classifies the archetype as application with UI components and activates both agent_context and design modules.",
+        "Proposes a DESIGN.md file adhering to the Google Stitch standard with YAML frontmatter tokens and core Markdown sections.",
+        "Previews both AGENTS.md and DESIGN.md content and waits for approval instead of silently writing them.",
+        "Does not add DESIGN.md to non-UI archetypes or generate arbitrary color/spacing tokens without preview.",
+        "Includes DESIGN.md and AGENTS.md in the plan and consent log."
+      ]
+    }
+  ]
+}

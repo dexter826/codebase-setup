@@ -1,0 +1,29 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "codebase-setup",
+  "displayName": "Codebase Setup",
+  "version": "0.1.0",
+  "description": "Set up or harden any codebase into a working baseline with source initialization, quality gates, tests, CI, Docker/env, standard project files (AGENTS.md, DESIGN.md), and AI agent context, using consent-driven execution.",
+  "author": {
+    "name": "dexter826",
+    "url": "https://github.com/dexter826"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/dexter826/codebase-setup",
+  "homepage": "https://github.com/dexter826/codebase-setup",
+  "keywords": [
+    "codebase",
+    "project-setup",
+    "scaffold",
+    "tooling",
+    "ci",
+    "agents-md",
+    "design-md",
+    "quality-gates"
+  ],
+  "suggestedPrompts": [
+    "Setup base project mới",
+    "Harden repo hiện tại (thêm lint, test, CI)",
+    "Khởi tạo web app với AGENTS.md và DESIGN.md"
+  ]
+}
