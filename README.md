@@ -6,105 +6,109 @@
 
 # codebase-setup
 
-`codebase-setup` là Agent Skill đưa một repository — mới hoặc đã có — về baseline hoạt động được: source chạy được, quality gate, test, CI, cấu hình container/môi trường, tài liệu phát triển và ngữ cảnh cho AI agent.
+`codebase-setup` is an Agent Skill that brings any repository — new or existing — to a working, production-grade baseline: runnable source, quality gates, automated testing, CI pipelines, container/environment configuration, standard engineering documentation, and AI agent context.
 
-Skill vận hành theo **trạng thái**, không theo từng loại input:
+The skill operates **by state**, not by static recipes:
 
 ```text
 Target Baseline = Archetype × Stack × Depth × Modules
-Current State   = bằng chứng từ repo + môi trường
+Current State   = evidence from repository + runtime environment
 Gap             = Target − Current
-Setup           = đóng Gap theo thứ tự, có consent
+Setup           = ordered, consented closure of Gap
 ```
 
-Prompt mơ hồ, hội thoại trước đó, PRD/SRD, repository có sẵn hay môi trường máy đều chỉ là nguồn bằng chứng để điền **Setup Brief**. Sau bước này, toàn bộ workflow chạy trên cùng một cấu trúc.
+Whether triggered by a brief prompt, chat context, PRD/SRD documents, or an existing messy codebase, the skill extracts verifiable facts to compile a unified **Setup Brief**. From that point on, the entire workflow executes deterministically against the state gap.
 
-## Tính năng chính
+---
 
-- **Ba chế độ**: `scaffold` cho thư mục mới, `harden` cho repo đã có, `audit-only` cho đánh giá không ghi file.
-- **Nhận diện theo archetype**: application, service/API, library/CLI, monorepo, skill package, docs/content và generic.
-- **Stack-agnostic**: đọc manifest, lockfile và cấu hình hiện có; tra cứu tài liệu chính thức tại thời điểm chạy thay vì dùng recipe đóng băng.
-- **Bốn consent gate riêng biệt**: toolchain, global tool, source init và dependency. Nhóm rỗng được bỏ qua, global install luôn cần phê duyệt riêng.
-- **Additive by default**: merge cấu hình, thêm script, giữ nguyên convention; ghi đè file cần consent rõ ràng.
-- **AGENTS.md & DESIGN.md có kiểm soát**: luôn preview nội dung và hỏi trước khi tạo (`AGENTS.md` cho ngữ cảnh agent, `DESIGN.md` theo chuẩn Google Stitch cho dự án frontend/UI).
-- **Bộ file tiêu chuẩn công nghiệp**: hỗ trợ đầy đủ `README.md`, `LICENSE`, `CHANGELOG.md`, `.editorconfig`, `CONTRIBUTING.md`, `SECURITY.md` theo các chuẩn mở.
-- **Báo cáo có bằng chứng**: chỉ báo `pass` cho lệnh thực sự đã chạy, tách lỗi do setup khỏi lỗi có sẵn.
+## Key Features
 
-## Chế độ làm việc
+- **Three operating modes**: `scaffold` for new or empty directories, `harden` for existing codebases, and `audit-only` for non-modifying assessments.
+- **Archetype-aware**: Classifies repositories into application, service/API, library/CLI, monorepo, skill package, docs/content, or generic.
+- **Stack-agnostic & dynamic research**: Inspects manifests, lockfiles, and existing configs; queries current official documentation and CLI `--help` at runtime instead of relying on stale, hardcoded recipes.
+- **Four discrete consent gates**: Toolchain, global tools, source initialization, and dependencies. Empty groups are skipped; global installs strictly require explicit, separate confirmation.
+- **Additive by default**: Merges configuration files, adds scripts, and preserves established project conventions; overwriting custom files always requires explicit approval.
+- **Governed `AGENTS.md` & `DESIGN.md`**: Always previews content and asks before creating files (`AGENTS.md` for agent instructions, Google Stitch compliant `DESIGN.md` for frontend/UI applications).
+- **Industry standard file templates**: Built-in canonical templates for `README.md`, `LICENSE`, `CHANGELOG.md`, `.editorconfig`, `CONTRIBUTING.md`, and `SECURITY.md`.
+- **Evidence-based reporting**: Reports `pass` only for commands that actually ran and exited with zero; clearly isolates setup-induced failures from pre-existing repository issues.
 
-| Chế độ | Khi nào dùng | Ghi chú |
+---
+
+## Operating Modes
+
+| Mode | When to use | Behavior |
 | :--- | :--- | :--- |
-| **scaffold** | Thư mục đích trống hoặc dự án mới | Có source init qua scaffolder chính thức |
-| **harden** | Repo đã có source/manifest nhưng thiếu quality gate, test, CI, docs | Không chạy lại source init |
-| **audit-only** | Chỉ cần đánh giá khoảng trống | Không ghi file, không cài dependency |
+| **`scaffold`** | Target directory is empty or starting a new project | Runs official ecosystem scaffolder with consent |
+| **`harden`** | Repository already has code/manifests but lacks tooling | Adds missing gates, tests, CI, docs; never re-initializes source |
+| **`audit-only`** | User requests gap assessment or health check | Zero filesystem writes, zero dependency installs |
 
-## Phạm vi
+---
 
-| Trục | Giá trị |
+## Scope Matrix
+
+| Axis | Supported Values |
 | :--- | :--- |
-| Archetype | application · service/API · library/CLI · monorepo · skill package · docs/content · generic |
-| Stack | JavaScript/TypeScript · Python · Go · ecosystem khác · generic |
-| Depth | minimal · standard (mặc định) · strict |
-| Module | structure · quality · tests · delivery · docs · community · design · agent context |
+| **Archetype** | application · service/API · library/CLI · monorepo · skill package · docs/content · generic |
+| **Stack** | JavaScript/TypeScript · Python · Go · other ecosystems · generic |
+| **Depth** | minimal · standard (default) · strict |
+| **Module** | structure · quality · tests · delivery · docs · community · design · agent context |
 
-Stack và công cụ cụ thể không được hardcode. Skill đọc repository trước, sau đó tra cứu command/flag hiện hành qua tài liệu chính thức hoặc `--help`, và ghi lại nguồn đã dùng trong báo cáo.
+Specific toolchains are not hardcoded. The skill examines the repository first, verifies commands and flags with official documentation or `--help`, and records exact sources in the final setup report.
 
-## Cài đặt
+---
 
-### Qua Plugin Marketplace (Claude Code, Codex, Antigravity)
+## Installation
 
-Claude Code:
+### Via Plugin Marketplace (Claude Code, Codex, Antigravity)
 
+**Claude Code:**
 ```text
 /plugin marketplace add dexter826/codebase-setup
 /plugin install codebase-setup@codebase-setup
 ```
 
-Codex:
-
+**Codex:**
 ```bash
 codex plugin marketplace add dexter826/codebase-setup
 codex plugin add codebase-setup@codebase-setup
 ```
 
-Antigravity:
-
+**Antigravity:**
 ```bash
 agy plugin install https://github.com/dexter826/codebase-setup
 ```
 
-### Qua Skills CLI (Khuyến dùng)
+---
 
-Cài theo dự án:
+### Via Skills CLI (Recommended)
 
+**Install into current project:**
 ```bash
 npx skills add dexter826/codebase-setup
 ```
 
-Cài global (không hỏi xác nhận):
-
+**Install globally (silent confirmation):**
 ```bash
 npx skills add dexter826/codebase-setup -g -y
 ```
 
-### Cài thủ công bằng Git
+---
 
-Sao chép thư mục `skills/codebase-setup` vào thư mục skills của agent để chỉ cài phần runtime (`SKILL.md`, `references/`, `assets/`), không kéo theo `README.md` hay `evals/`.
+### Manual Git Installation
 
-Global trên Unix/macOS (`~/.agents/skills`):
+Copy the `skills/codebase-setup` folder into your agent's skills directory to install only the runtime payload (`SKILL.md`, `references/`, `assets/templates/`) without repository overhead.
 
+**Global on Unix/macOS (`~/.agents/skills`):**
 ```bash
 tmp=$(mktemp -d) && git clone --depth 1 https://github.com/dexter826/codebase-setup.git "$tmp" && mkdir -p ~/.agents/skills && rm -rf ~/.agents/skills/codebase-setup && cp -R "$tmp/skills/codebase-setup" ~/.agents/skills/codebase-setup && rm -rf "$tmp"
 ```
 
-Theo dự án trên Unix/macOS (`.agents/skills`):
-
+**Project-local on Unix/macOS (`.agents/skills`):**
 ```bash
 tmp=$(mktemp -d) && git clone --depth 1 https://github.com/dexter826/codebase-setup.git "$tmp" && mkdir -p .agents/skills && rm -rf .agents/skills/codebase-setup && cp -R "$tmp/skills/codebase-setup" .agents/skills/codebase-setup && rm -rf "$tmp"
 ```
 
-Global trên Windows PowerShell (`$HOME\.agents\skills`):
-
+**Global on Windows PowerShell (`$HOME\.agents\skills`):**
 ```powershell
 $tmp = Join-Path $env:TEMP "codebase-setup-repo"
 Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue
@@ -115,52 +119,62 @@ Copy-Item -Recurse "$tmp\skills\codebase-setup" "$HOME\.agents\skills\codebase-s
 Remove-Item -Recurse -Force $tmp
 ```
 
-## Cách dùng
+---
 
-Skill tự kích hoạt khi bạn nhờ setup, khởi tạo, chuẩn hóa hoặc làm cứng một project/repository.
+## Usage Examples
 
-Ví dụ:
+The skill activates automatically whenever you ask an agent to scaffold, initialize, standardize, or harden a codebase.
 
 ```text
-Setup project web mới, React + TypeScript, có test và CI.
+Set up a new web app using React, TypeScript, and Vite with tests and GitHub Actions CI.
 ```
 
 ```text
-Chuẩn hóa repo này: thêm lint, test, CI và AGENTS.md. Đừng đổi code trong src.
+Harden this repository: add linting, formatting, test runners, and AGENTS.md. Do not touch existing code in src/.
 ```
 
 ```text
-Repo này thiếu Dockerfile với .env.example, bổ sung giúp tao.
+This repository lacks a Dockerfile and .env.example. Add them without altering pyproject.toml.
 ```
 
 ```text
-Đọc PRD trong docs/ và dựng khung project theo đó, nhưng đừng implement feature.
+Read the PRD in docs/ and scaffold the baseline structure, but do not implement product features yet.
 ```
 
-Trước khi thay đổi repository, skill trình bày kế hoạch gồm file sẽ tạo, file sẽ sửa, command sẽ chạy và vùng không đụng tới. Trong lúc thực thi, các nhóm hành động rủi ro được hỏi riêng. Kết thúc bằng báo cáo có consent log, command đã chạy và kết quả kiểm tra.
+Before making any changes, the skill presents an execution plan outlining files to create/modify, commands to run, and untouched boundaries. High-risk actions prompt for consent. Upon completion, it outputs a verification report with a complete consent log.
 
-## Cấu trúc package
+---
+
+## Package Structure
 
 ```text
 codebase-setup/
-├── skills/codebase-setup/           # Payload runtime của skill
-│   ├── SKILL.md                     # Điều phối workflow chính
-│   ├── assets/templates/            # Bộ template tiêu chuẩn (AGENTS, DESIGN, ...)
-│   └── references/                  # Hướng dẫn chi tiết theo chuyên đề
-├── evals/                           # Kịch bản và dữ liệu kiểm thử
-├── assets/                          # Bộ nhận diện logo
-├── plugin.json                      # Cấu hình plugin đa nền tảng
-└── README.md, CHANGELOG.md, LICENSE # Tài liệu và giấy phép
+├── skills/codebase-setup/           # Skill runtime payload
+│   ├── SKILL.md                     # Main router and orchestration workflow
+│   ├── assets/templates/            # Standard templates (AGENTS.md, DESIGN.md, etc.)
+│   └── references/                  # Specialized topic reference guides
+├── evals/                           # Evaluation scenarios and test fixtures
+├── assets/                          # Brand identity and logo suite
+├── plugin.json                      # Multi-platform plugin configuration
+└── README.md, CHANGELOG.md, LICENSE # Documentation and licensing
 ```
 
-## Yêu cầu
+---
 
-- Một coding agent hỗ trợ chuẩn AgentSkills.
-- Quyền đọc repository đích và quyền ghi vào thư mục sẽ setup.
-- Kết nối mạng nếu cần cài dependency, chạy scaffolder hoặc tra cứu tài liệu chính thức.
+## Requirements & Safety Guarantees
 
-Skill không tự cài global tool, không sửa `PATH`, không commit thay bạn và không đọc giá trị secret vào file sinh ra hoặc báo cáo.
+- Compatible with coding agents implementing the **AgentSkills** specification.
+- Requires read permissions for the target repository and write permissions for the project workspace.
+- Network access required only when installing dependencies, invoking official scaffolders, or checking current documentation.
 
-## Giấy phép
+**Safety boundaries:**
+- Never installs global system tools without explicit authorization.
+- Never mutates system `PATH` or user shell profile configuration.
+- Never commits to version control without direct instruction.
+- Never exposes secrets or parses private credentials into reports or generated code.
 
-MIT. Xem [LICENSE](LICENSE).
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
