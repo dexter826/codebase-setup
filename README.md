@@ -143,39 +143,14 @@ Trước khi thay đổi repository, skill trình bày kế hoạch gồm file s
 
 ```text
 codebase-setup/
-├── plugin.json
-├── .antigravity-plugin/
-│   └── plugin.json
-├── .claude-plugin/
-│   ├── plugin.json
-│   └── marketplace.json
-├── .agents/plugins/
-│   └── marketplace.json
-├── assets/
-│   ├── logo-dark.svg
-│   ├── logo-light.svg
-│   ├── logo-horizontal-dark.svg
-│   └── logo-horizontal-light.svg
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-├── evals/
-│   ├── evals.json
-│   └── files/
-└── skills/codebase-setup/
-    ├── SKILL.md
-    ├── assets/templates/
-    │   ├── AGENTS.md
-    │   ├── DESIGN.md
-    │   ├── .editorconfig
-    │   ├── CONTRIBUTING.md
-    │   └── SECURITY.md
-    └── references/
-        ├── intake-and-brief.md
-        ├── discovery-and-gap.md
-        ├── baseline-and-depth.md
-        ├── consent-and-safety.md
-        └── verification-and-report.md
+├── skills/codebase-setup/           # Payload runtime của skill
+│   ├── SKILL.md                     # Điều phối workflow chính
+│   ├── assets/templates/            # Bộ template tiêu chuẩn (AGENTS, DESIGN, ...)
+│   └── references/                  # Hướng dẫn chi tiết theo chuyên đề
+├── evals/                           # Kịch bản và dữ liệu kiểm thử
+├── assets/                          # Bộ nhận diện logo
+├── plugin.json                      # Cấu hình plugin đa nền tảng
+└── README.md, CHANGELOG.md, LICENSE # Tài liệu và giấy phép
 ```
 
 ## Yêu cầu
