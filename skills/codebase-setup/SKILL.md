@@ -15,7 +15,7 @@ description: >-
 license: MIT
 metadata:
   author: "dexter826"
-  version: "0.1.0"
+  version: "1.0.0"
 ---
 
 # Codebase Setup

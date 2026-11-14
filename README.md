@@ -1,6 +1,14 @@
 <p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-horizontal-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo-horizontal-light.svg">
+    <img alt="codebase-setup" src="assets/logo-horizontal-dark.svg" width="480">
+  </picture>
+</p>
+
+<p align="center">
   <a href="skills/codebase-setup/SKILL.md"><img src="https://img.shields.io/badge/standard-AgentSkill-00cc5c?style=flat-square&labelColor=0a0a0a" alt="standard: AgentSkill" /></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-0.1.0-00cc5c?style=flat-square&labelColor=0a0a0a" alt="version: 0.1.0" /></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.0.0-00cc5c?style=flat-square&labelColor=0a0a0a" alt="version: 1.0.0" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-00cc5c?style=flat-square&labelColor=0a0a0a" alt="license: MIT" /></a>
 </p>
 

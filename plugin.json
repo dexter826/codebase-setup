@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "codebase-setup",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Set up or harden any codebase into a working baseline with source initialization, quality gates, tests, CI, Docker/env, developer docs, and AI agent context, using consent-driven execution.",
   "author": {
     "name": "dexter826"
