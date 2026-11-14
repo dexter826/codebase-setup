@@ -6,9 +6,9 @@
 
 # codebase-setup
 
-`codebase-setup` is an Agent Skill that brings any repository — new or existing — to a working, production-grade baseline: runnable source, quality gates, automated testing, CI pipelines, container/environment configuration, standard engineering documentation, and AI agent context.
+`codebase-setup` is an Agent Skill that sets up a clean, runnable baseline for new or existing repositories: runnable source code, linting and formatting, automated tests, CI workflows, container configuration, standard documentation, and agent instructions.
 
-The skill operates **by state**, not by static recipes:
+It computes changes by comparing the repository's current state against the target configuration:
 
 ```text
 Target Baseline = Archetype × Stack × Depth × Modules
@@ -17,49 +17,49 @@ Gap             = Target − Current
 Setup           = ordered, consented closure of Gap
 ```
 
-Whether triggered by a brief prompt, chat context, PRD/SRD documents, or an existing messy codebase, the skill extracts verifiable facts to compile a unified **Setup Brief**. From that point on, the entire workflow executes deterministically against the state gap.
+The skill inspects existing manifests, PRDs, and chat context to generate a setup plan, then applies only the changes needed to close the gap.
 
 ---
 
-## Key Features
+## Features
 
-- **Three operating modes**: `scaffold` for new or empty directories, `harden` for existing codebases, and `audit-only` for non-modifying assessments.
-- **Archetype-aware**: Classifies repositories into application, service/API, library/CLI, monorepo, skill package, docs/content, or generic.
-- **Stack-agnostic & dynamic research**: Inspects manifests, lockfiles, and existing configs; queries current official documentation and CLI `--help` at runtime instead of relying on stale, hardcoded recipes.
-- **Four discrete consent gates**: Toolchain, global tools, source initialization, and dependencies. Empty groups are skipped; global installs strictly require explicit, separate confirmation.
-- **Additive by default**: Merges configuration files, adds scripts, and preserves established project conventions; overwriting custom files always requires explicit approval.
-- **Governed `AGENTS.md` & `DESIGN.md`**: Always previews content and asks before creating files (`AGENTS.md` for agent instructions, Google Stitch compliant `DESIGN.md` for frontend/UI applications).
-- **Industry standard file templates**: Built-in canonical templates for `README.md`, `LICENSE`, `CHANGELOG.md`, `.editorconfig`, `CONTRIBUTING.md`, and `SECURITY.md`.
-- **Evidence-based reporting**: Reports `pass` only for commands that actually ran and exited with zero; clearly isolates setup-induced failures from pre-existing repository issues.
+- Three operating modes: `scaffold` for new directories, `harden` for existing repositories, and `audit-only` for non-modifying reviews.
+- Detects the project archetype (application, service, CLI, library, monorepo, or skill package) and selects appropriate tooling.
+- Verifies tool commands and options against official documentation or `--help` output rather than relying on static assumptions.
+- Pauses for approval before installing toolchains, global utilities, or package dependencies, and before writing initial source code.
+- Merges configurations and respects existing project conventions instead of overwriting custom files without permission.
+- Previews `AGENTS.md` and Google Stitch compliant `DESIGN.md` before creating them.
+- Provides standard templates for licenses, contributing guidelines, and security policies.
+- Validates every setup step with actual exit codes, isolating new issues from pre-existing repository errors.
 
 ---
 
-## Operating Modes
+## Operating modes
 
 | Mode | When to use | Behavior |
 | :--- | :--- | :--- |
-| **`scaffold`** | Target directory is empty or starting a new project | Runs official ecosystem scaffolder with consent |
-| **`harden`** | Repository already has code/manifests but lacks tooling | Adds missing gates, tests, CI, docs; never re-initializes source |
-| **`audit-only`** | User requests gap assessment or health check | Zero filesystem writes, zero dependency installs |
+| `scaffold` | Target directory is empty or starting a new project | Runs official scaffolding tools with user approval |
+| `harden` | Repository already contains code or manifests | Adds missing tooling, tests, CI, and docs without overwriting source code |
+| `audit-only` | Assessing gaps or running a repository check | Inspects the workspace without writing files or installing packages |
 
 ---
 
-## Scope Matrix
+## Scope matrix
 
-| Axis | Supported Values |
+| Axis | Supported values |
 | :--- | :--- |
-| **Archetype** | application · service/API · library/CLI · monorepo · skill package · docs/content · generic |
-| **Stack** | JavaScript/TypeScript · Python · Go · other ecosystems · generic |
-| **Depth** | minimal · standard (default) · strict |
-| **Module** | structure · quality · tests · delivery · docs · community · design · agent context |
+| Archetype | application, service/API, library/CLI, monorepo, skill package, docs/content, generic |
+| Stack | JavaScript/TypeScript, Python, Go, other ecosystems, generic |
+| Depth | minimal, standard (default), strict |
+| Modules | structure, quality, tests, delivery, docs, community, design, agent context |
 
-Specific toolchains are not hardcoded. The skill examines the repository first, verifies commands and flags with official documentation or `--help`, and records exact sources in the final setup report.
+Toolchains are discovered at runtime. The skill checks the repository, validates flags against local commands or official documentation, and logs exact references in the final setup report.
 
 ---
 
 ## Installation
 
-### Via Plugin Marketplace (Claude Code, Codex, Antigravity)
+### Via plugin marketplace (Claude Code, Codex, Antigravity)
 
 **Claude Code:**
 ```text
@@ -80,23 +80,23 @@ agy plugin install https://github.com/dexter826/codebase-setup
 
 ---
 
-### Via Skills CLI (Recommended)
+### Via skills CLI
 
 **Install into current project:**
 ```bash
 npx skills add dexter826/codebase-setup
 ```
 
-**Install globally (silent confirmation):**
+**Install globally:**
 ```bash
 npx skills add dexter826/codebase-setup -g -y
 ```
 
 ---
 
-### Manual Git Installation
+### Manual git installation
 
-Copy the `skills/codebase-setup` folder into your agent's skills directory to install only the runtime payload (`SKILL.md`, `references/`, `assets/templates/`) without repository overhead.
+Copy `skills/codebase-setup` into your agent's skills directory. This installs the runtime payload (`SKILL.md`, `references/`, and `assets/templates/`) without repository overhead.
 
 **Global on Unix/macOS (`~/.agents/skills`):**
 ```bash
@@ -121,9 +121,9 @@ Remove-Item -Recurse -Force $tmp
 
 ---
 
-## Usage Examples
+## Usage examples
 
-The skill activates automatically whenever you ask an agent to scaffold, initialize, standardize, or harden a codebase.
+The skill runs whenever you ask an agent to scaffold, configure, or standardize a repository.
 
 ```text
 Set up a new web app using React, TypeScript, and Vite with tests and GitHub Actions CI.
@@ -141,11 +141,11 @@ This repository lacks a Dockerfile and .env.example. Add them without altering p
 Read the PRD in docs/ and scaffold the baseline structure, but do not implement product features yet.
 ```
 
-Before making any changes, the skill presents an execution plan outlining files to create/modify, commands to run, and untouched boundaries. High-risk actions prompt for consent. Upon completion, it outputs a verification report with a complete consent log.
+Before changing any files, the skill presents a plan showing modified paths, scheduled commands, and protected areas. It prompts for confirmation on significant actions and finishes with a verification report covering every executed command.
 
 ---
 
-## Package Structure
+## Package structure
 
 ```text
 codebase-setup/
@@ -161,20 +161,20 @@ codebase-setup/
 
 ---
 
-## Requirements & Safety Guarantees
+## Requirements and safety
 
-- Compatible with coding agents implementing the **AgentSkills** specification.
-- Requires read permissions for the target repository and write permissions for the project workspace.
-- Network access required only when installing dependencies, invoking official scaffolders, or checking current documentation.
+- Compatible with coding agents that support the AgentSkills specification.
+- Requires read access to the target repository and write access to the workspace.
+- Network access is only needed when installing packages or checking online documentation.
 
-**Safety boundaries:**
-- Never installs global system tools without explicit authorization.
-- Never mutates system `PATH` or user shell profile configuration.
-- Never commits to version control without direct instruction.
-- Never exposes secrets or parses private credentials into reports or generated code.
+Safety guardrails:
+- Global tools are never installed without explicit confirmation.
+- Shell profiles and system `PATH` remain untouched.
+- Git commits are only made when requested.
+- Secrets and tokens are excluded from reports and generated configs.
 
 ---
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT. See [LICENSE](LICENSE) for details.
